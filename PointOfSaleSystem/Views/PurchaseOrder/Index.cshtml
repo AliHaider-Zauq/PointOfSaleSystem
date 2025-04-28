@@ -1,0 +1,48 @@
+﻿@model IEnumerable<PointOfSaleSystem.Models.PurchaseOrder>
+@{
+    ViewData["Title"] = "📥 Purchase Orders";
+}
+
+<h2>📥 Purchase Orders</h2>
+
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-success">+ Create New Purchase Order</a>
+</div>
+
+@if (!Model.Any())
+{
+    <p>No purchase orders available.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Supplier</th>
+                <th>Order Date</th>
+                <th>Items</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.Supplier?.Name</td>
+                    <td>@order.OrderDate.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <ul>
+                            @foreach (var item in order.PurchaseItems)
+                            {
+                                <li>
+                                    @item.Product?.Name - Qty: @item.Quantity, Purchase Price: @item.PurchasePrice.ToString("C")
+                                </li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,24 @@
+﻿@model PointOfSaleSystem.ViewModels.SupplierViewModel
+
+@{
+    ViewData["Title"] = "Create Supplier";
+}
+
+<h2>Create Supplier</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ContactInfo"></label>
+        <input asp-for="ContactInfo" class="form-control" />
+        <span asp-validation-for="ContactInfo" class="text-danger" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

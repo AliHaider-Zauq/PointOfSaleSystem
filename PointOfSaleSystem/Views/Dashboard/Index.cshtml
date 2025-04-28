@@ -1,0 +1,38 @@
+﻿@model IEnumerable<PointOfSaleSystem.ViewModels.ProductListViewModel>
+@{
+    ViewData["Title"] = "📊 Admin Dashboard";
+}
+
+<h2>📦 Admin Product Dashboard</h2>
+
+<div class="mb-3">
+    <a asp-controller="Dashboard" asp-action="Create" class="btn btn-primary">+ Create New Product</a>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Sale Price</th>
+            <th>Latest Purchase Price</th>
+            <th>Quantity</th>
+            <th>Category</th>
+            <th>Supplier</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Id</td>
+                <td>@p.Name</td>
+                <td>@p.SalePrice.ToString("C")</td>
+                <td>@(p.LatestPurchasePrice.HasValue ? p.LatestPurchasePrice.Value.ToString("C") : "N/A")</td>
+                <td>@p.Quantity</td>
+                <td>@p.CategoryName</td>
+                <td>@p.SupplierName</td>
+            </tr>
+        }
+    </tbody>
+</table>

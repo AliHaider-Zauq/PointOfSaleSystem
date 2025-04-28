@@ -1,0 +1,69 @@
+﻿@using PointOfSaleSystem.ViewModels
+@model OrderViewModel
+@{
+    ViewData["Title"] = "New Sale Order";
+    var products = Model.Products?.ToList() ?? new List<Product>();
+}
+
+<h2>🛍️ Create Order</h2>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label>Select Customer</label>
+        <select asp-for="CustomerId" class="form-control" asp-items="@(new SelectList(Model.Customers, "Id", "Name"))">
+            <option value="">-- Select Customer --</option>
+        </select>
+        <span asp-validation-for="CustomerId" class="text-danger"></span>
+    </div>
+
+    <div id="order-items">
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <select class="form-control" name="OrderItems[0].ProductId" required>
+                    <option value="">-- Select Product --</option>
+                    @foreach (var p in products)
+                    {
+                        <option value="@p.Id">@p.Name (In Stock: @p.Quantity)</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" name="OrderItems[0].Quantity" type="number" min="1" value="1" required />
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-sm btn-secondary mb-3" onclick="addMore()">+ Add More</button>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Place Order</button>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        let index = 1;
+        function addMore() {
+            const row = `
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <select class="form-control" name="OrderItems[${index}].ProductId" required>
+                        <option value="">-- Select Product --</option>
+                        ${`@foreach (var p in products)
+        {
+            <text><option value="@p.Id">@p.Name (In Stock: @p.Quantity)</option></text>
+        }`}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input class="form-control" name="OrderItems[${index}].Quantity" type="number" min="1" value="1" required />
+                </div>
+            </div>`;
+            document.getElementById("order-items").insertAdjacentHTML("beforeend", row);
+            index++;
+        }
+    </script>
+}

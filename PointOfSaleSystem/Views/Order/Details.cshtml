@@ -1,0 +1,46 @@
+﻿@model PointOfSaleSystem.Models.Order
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<h2>Order Details</h2>
+
+<div class="mb-3">
+    <strong>Customer:</strong> @Model.Customer?.Name <br />
+    <strong>Order Date:</strong> @Model.OrderDate.ToString("dd MMM yyyy") <br />
+</div>
+
+<h4>Ordered Items:</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            decimal total = 0;
+            foreach (var item in Model.OrderItems)
+            {
+                var price = item.Product?.SalePrice ?? 0;
+                var subtotal = item.ProductSalePrice * item.Quantity;
+                total += subtotal;
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.ProductSalePrice.ToString("C", new CultureInfo("ur-PK"))</td>
+
+                    <td>@subtotal.ToString("C", new CultureInfo("ur-PK"))</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<h5>Total Price: <strong>@total.ToString("C", new CultureInfo("ur-PK"))</strong></h5>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Back to Orders</a>

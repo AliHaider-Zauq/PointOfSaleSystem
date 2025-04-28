@@ -1,0 +1,81 @@
+﻿@using PointOfSaleSystem.ViewModels
+@model PurchaseOrderViewModel
+@{
+    ViewData["Title"] = "New Purchase Order";
+    var products = Model.Products?.ToList() ?? new List<Product>();
+}
+
+<h2>🛒 Create Purchase Order</h2>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label>Select Supplier</label>
+        <select asp-for="SupplierId" class="form-control" asp-items="@(new SelectList(Model.Suppliers, "Id", "Name"))">
+            <option value="">-- Select Supplier --</option>
+        </select>
+        <span asp-validation-for="SupplierId" class="text-danger"></span>
+    </div>
+
+    <div id="purchase-items">
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <select class="form-control" name="PurchaseItems[0].ProductId" required>
+                    <option value="">-- Select Product --</option>
+                    @foreach (var p in products)
+                    {
+                            <option value="@p.Id">@p.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" name="PurchaseItems[0].Quantity" type="number" placeholder="Qty" min="1" required />
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" name="PurchaseItems[0].PurchasePrice" type="number" placeholder="Purchase Price" min="0" required />
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" name="PurchaseItems[0].SalePrice" type="number" placeholder="Sale Price" min="0" />
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-sm btn-secondary mb-3" onclick="addMore()">+ Add More</button>
+
+    <div>
+        <button type="submit" class="btn btn-success">Submit Purchase</button>
+    </div>
+</form>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+        <script>
+            let index = 1;
+            function addMore() {
+                const row = `
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <select class="form-control" name="PurchaseItems[${index}].ProductId" required>
+                            <option value="">-- Select Product --</option>
+                            ${`@foreach (var p in products)
+        {
+            <text><option value="@p.Id">@p.Name</option></text>
+        }`}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" name="PurchaseItems[${index}].Quantity" type="number" placeholder="Qty" min="1" required />
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control" name="PurchaseItems[${index}].PurchasePrice" type="number" placeholder="Purchase Price" min="0" required />
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control" name="PurchaseItems[${index}].SalePrice" type="number" placeholder="Sale Price" min="0" />
+                    </div>
+                </div>`;
+                document.getElementById("purchase-items").insertAdjacentHTML("beforeend", row);
+                index++;
+            }
+        </script>
+}

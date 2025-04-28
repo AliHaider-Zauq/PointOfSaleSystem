@@ -1,0 +1,39 @@
+﻿@model PointOfSaleSystem.ViewModels.ProductViewModel
+@{
+    ViewData["Title"] = "Create New Product";
+}
+
+<h2>➕ Create Product</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CategoryId">Category</label>
+        <select asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+            <option value="">-- Select Category --</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SupplierId">Supplier</label>
+        <select asp-for="SupplierId" class="form-control" asp-items="@(new SelectList(Model.Suppliers, "Id", "Name"))">
+            <option value="">-- Select Supplier --</option>
+        </select>
+        <span asp-validation-for="SupplierId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SalePrice">Sale Price</label>
+        <input asp-for="SalePrice" class="form-control" />
+        <span asp-validation-for="SalePrice" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" asp-controller="Dashboard" class="btn btn-secondary">Cancel</a>
+</form>

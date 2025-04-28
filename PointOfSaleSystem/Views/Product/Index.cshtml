@@ -1,0 +1,30 @@
+﻿@model IEnumerable<PointOfSaleSystem.ViewModels.ProductListViewModel>
+@{
+    ViewData["Title"] = "🛍️ Product List";
+}
+
+<h2>🛍️ Product List</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Category</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Id</td>
+                <td>@p.Name</td>
+                <td>@p.SalePrice.ToString("C")</td>
+                <td>@p.Quantity</td>
+                <td>@p.CategoryName</td>
+            </tr>
+        }
+    </tbody>
+</table>

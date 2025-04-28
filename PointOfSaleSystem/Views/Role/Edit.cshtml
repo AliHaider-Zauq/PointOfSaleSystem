@@ -1,0 +1,33 @@
+﻿@using PointOfSaleSystem.RolesViewModel
+@model EditRoleViewModel
+
+<h2>Edit Role: @Model.RoleName</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="RoleId" />
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Assigned</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Users.Count; i++)
+            {
+                <tr>
+                    <td>@Model.Users[i].Email</td>
+                    <td>
+                        <input asp-for="Users[i].IsSelected" />
+                        <input type="hidden" asp-for="Users[i].UserId" />
+                        <input type="hidden" asp-for="Users[i].Email" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>
