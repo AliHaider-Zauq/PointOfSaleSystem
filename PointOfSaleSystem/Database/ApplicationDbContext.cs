@@ -17,7 +17,11 @@ namespace PointOfSaleSystem.Database
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
-        public DbSet<PurchaseOrder> PurchaseOrders { get; set; }  // Also needed
+        public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+
+        public DbSet<ReturnOrder> ReturnOrders { get; set; }
+        public DbSet<ReturnOrderItem> ReturnOrderItems { get; set; }
+
 
 
 

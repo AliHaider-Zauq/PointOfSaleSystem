@@ -42,6 +42,9 @@ namespace PointOfSaleSystem.Services
 
                 _context.Products.Update(product);
 
+
+
+
                 purchaseOrder.PurchaseItems.Add(new PurchaseOrderItem
                 {
                     ProductId = product.Id,

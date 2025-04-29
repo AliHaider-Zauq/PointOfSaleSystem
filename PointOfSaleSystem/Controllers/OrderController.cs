@@ -28,26 +28,6 @@ public class OrderController : Controller
         return View(model);
     }
 
-
-
-
-
-
-
-
-
-    /*
-    [HttpGet]
-    public async Task<IActionResult> Create()
-    {
-        var model = new OrderViewModel
-        {
-            Products = await _orderService.GetAllProductsAsync(),
-            Customers = await _orderService.GetAllCustomersAsync()
-        };
-        return View(model);
-    }
-
     [HttpPost]
     public async Task<IActionResult> Create(OrderViewModel model)
     {
@@ -67,7 +47,6 @@ public class OrderController : Controller
         model.Customers = await _orderService.GetAllCustomersAsync();
         return View(model);
     }
-    */
 
     public IActionResult Success()
     {

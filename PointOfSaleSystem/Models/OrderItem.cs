@@ -15,6 +15,9 @@
         public decimal ProductPurchasePrice { get; set; }   
         public decimal ProductSalePrice { get; set; }       
         public string ProductName { get; set; }
+
+        public int ReturnedQuantity { get; set; } 
+
     }
 
 }
