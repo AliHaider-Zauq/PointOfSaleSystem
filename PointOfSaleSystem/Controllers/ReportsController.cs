@@ -28,11 +28,12 @@ public class ReportsController : Controller
             .Sum(i => i.ProductSalePrice * i.Quantity);
 
         // 🔹 2. Total Revenue & Profit
-        var allOrderItems = await _context.OrderItems.ToListAsync();
-
-        decimal totalRevenue = allOrderItems.Sum(i => i.ProductSalePrice * i.Quantity);
-        decimal totalCost = allOrderItems.Sum(i => i.ProductPurchasePrice * i.Quantity);
+          var allOrderItems = await _context.OrderItems.ToListAsync();
+        
+          decimal totalRevenue = allOrderItems.Sum(i => i.ProductSalePrice * i.Quantity);
+          decimal totalCost = allOrderItems.Sum(i => i.ProductPurchasePrice * i.Quantity);
         decimal totalProfit = totalRevenue - totalCost;
+
 
         // 🔹 3. Top Customers
         var topCustomers = await _context.Orders

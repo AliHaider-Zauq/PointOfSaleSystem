@@ -12,8 +12,8 @@ using PointOfSaleSystem.Database;
 namespace PointOfSaleSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250423095909_PurchaseOrderModel")]
-    partial class PurchaseOrderModel
+    [Migration("20250430103715_ReturnOrder")]
+    partial class ReturnOrder
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -305,7 +305,13 @@ namespace PointOfSaleSystem.Migrations
                     b.Property<decimal>("ProductSalePrice")
                         .HasColumnType("numeric");
 
+                    b.Property<int?>("PurchaseOrderItemId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ReturnedQuantity")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -313,6 +319,8 @@ namespace PointOfSaleSystem.Migrations
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("PurchaseOrderItemId");
 
                     b.ToTable("OrderItems");
                 });
@@ -401,6 +409,59 @@ namespace PointOfSaleSystem.Migrations
                     b.HasIndex("PurchaseOrderId");
 
                     b.ToTable("PurchaseOrderItems");
+                });
+
+            modelBuilder.Entity("PointOfSaleSystem.Models.ReturnOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("ReturnDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("ReturnOrders");
+                });
+
+            modelBuilder.Entity("PointOfSaleSystem.Models.ReturnOrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("OrderItemId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("PurchasePrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ReturnOrderId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("SalePrice")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderItemId");
+
+                    b.HasIndex("ReturnOrderId");
+
+                    b.ToTable("ReturnOrderItems");
                 });
 
             modelBuilder.Entity("PointOfSaleSystem.Models.Supplier", b =>
@@ -504,9 +565,15 @@ namespace PointOfSaleSystem.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("PointOfSaleSystem.Models.PurchaseOrderItem", "PurchaseOrderItem")
+                        .WithMany()
+                        .HasForeignKey("PurchaseOrderItemId");
+
                     b.Navigation("Order");
 
                     b.Navigation("Product");
+
+                    b.Navigation("PurchaseOrderItem");
                 });
 
             modelBuilder.Entity("PointOfSaleSystem.Models.Product", b =>
@@ -558,6 +625,36 @@ namespace PointOfSaleSystem.Migrations
                     b.Navigation("PurchaseOrder");
                 });
 
+            modelBuilder.Entity("PointOfSaleSystem.Models.ReturnOrder", b =>
+                {
+                    b.HasOne("PointOfSaleSystem.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("PointOfSaleSystem.Models.ReturnOrderItem", b =>
+                {
+                    b.HasOne("PointOfSaleSystem.Models.OrderItem", "OrderItem")
+                        .WithMany("ReturnOrderItems")
+                        .HasForeignKey("OrderItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PointOfSaleSystem.Models.ReturnOrder", "ReturnOrder")
+                        .WithMany("ReturnItems")
+                        .HasForeignKey("ReturnOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrderItem");
+
+                    b.Navigation("ReturnOrder");
+                });
+
             modelBuilder.Entity("PointOfSaleSystem.Models.Category", b =>
                 {
                     b.Navigation("Products");
@@ -573,9 +670,19 @@ namespace PointOfSaleSystem.Migrations
                     b.Navigation("OrderItems");
                 });
 
+            modelBuilder.Entity("PointOfSaleSystem.Models.OrderItem", b =>
+                {
+                    b.Navigation("ReturnOrderItems");
+                });
+
             modelBuilder.Entity("PointOfSaleSystem.Models.PurchaseOrder", b =>
                 {
                     b.Navigation("PurchaseItems");
+                });
+
+            modelBuilder.Entity("PointOfSaleSystem.Models.ReturnOrder", b =>
+                {
+                    b.Navigation("ReturnItems");
                 });
 
             modelBuilder.Entity("PointOfSaleSystem.Models.Supplier", b =>

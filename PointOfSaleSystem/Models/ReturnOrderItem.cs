@@ -16,4 +16,5 @@
         public decimal SalePrice { get; set; }         // What it was sold for
     }
 
+
 }

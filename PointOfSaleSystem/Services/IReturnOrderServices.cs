@@ -1,6 +1,12 @@
-﻿namespace PointOfSaleSystem.Services
+﻿using PointOfSaleSystem.Models;
+using PointOfSaleSystem.ViewModels;
+
+namespace PointOfSaleSystem.Services.Interfaces
 {
-    public class IReturnOrderServices
+    public interface IReturnOrderService
     {
+        Task<ReturnOrderViewModel?> GetReturnFormByOrderIdAsync(int orderId);
+        Task<bool> ProcessReturnAsync(ReturnOrderViewModel model);
     }
+
 }

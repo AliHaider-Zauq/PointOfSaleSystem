@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public int OrderId { get; set; }
         public Order Order { get; set; } = null!;
-        public DateTime ReturnDate { get; set; }
+        public DateTime ReturnDate { get; set; } = DateTime.UtcNow;
 
         public ICollection<ReturnOrderItem> ReturnItems { get; set; } = new List<ReturnOrderItem>();
     }

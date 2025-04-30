@@ -12,8 +12,8 @@ using PointOfSaleSystem.Database;
 namespace PointOfSaleSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250429102141_ReturnOrder")]
-    partial class ReturnOrder
+    [Migration("20250430061135_IntitalModels")]
+    partial class IntitalModels
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
