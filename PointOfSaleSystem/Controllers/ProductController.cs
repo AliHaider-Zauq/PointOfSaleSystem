@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PointOfSaleSystem.Services;
 using PointOfSaleSystem.Services.Interfaces;
 
+[Authorize]
 public class ProductController : Controller
 {
     private readonly IProductService _productService;

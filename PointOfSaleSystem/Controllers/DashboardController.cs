@@ -12,18 +12,23 @@ public class DashboardController : Controller
     private readonly IProductService _productService;
     private readonly ICategoryService _categoryService;
     private readonly ISupplierService _supplierService;
-    public DashboardController(IProductService productService, ICategoryService categoryService, ISupplierService supplierService)
+    private readonly IReportService _reportService;
+    public DashboardController(IProductService productService, ICategoryService categoryService, ISupplierService supplierService, IReportService reportService)
     {
         _productService = productService;
         _categoryService = categoryService;
         _supplierService = supplierService;
-
+        _reportService = reportService;
     }
 
     public async Task<IActionResult> Index()
     {
         var products = await _productService.GetAllForDashboardAsync();
-        return View(products);
+        var reportData = await _reportService.GetDashboardReportAsync();
+
+        reportData.Products = products;
+
+        return View(reportData);
     }
 
     public async Task<IActionResult> Create()
@@ -103,5 +108,13 @@ public class DashboardController : Controller
         return RedirectToAction("Index", "Dashboard");
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await _productService.DeleteAsync(id);
+        TempData["SuccessMessage"] = "Product deleted successfully.";
+        return RedirectToAction(nameof(Index));
+    }
 
 }

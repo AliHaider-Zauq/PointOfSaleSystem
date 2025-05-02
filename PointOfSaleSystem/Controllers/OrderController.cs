@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PointOfSaleSystem.Services.Interfaces;
 using PointOfSaleSystem.ViewModels;
 
+[Authorize]
 public class OrderController : Controller
 {
     private readonly IOrderService _orderService;

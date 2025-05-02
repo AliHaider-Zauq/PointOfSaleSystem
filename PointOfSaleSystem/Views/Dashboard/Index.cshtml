@@ -1,37 +1,126 @@
-﻿@model IEnumerable<PointOfSaleSystem.ViewModels.ProductListViewModel>
+﻿@model PointOfSaleSystem.ViewModels.DashboardIndexViewModel
 @{
-    ViewData["Title"] = "📊 Admin Dashboard";
+    ViewData["Title"] = "📦 Product Dashboard";
 }
 
-<h2>📦 Admin Product Dashboard</h2>
+<h2 class="mb-4">📦 Product Dashboard</h2>
 
 <div class="mb-3">
     <a asp-controller="Dashboard" asp-action="Create" class="btn btn-primary">+ Create New Product</a>
 </div>
+<!-- ✅ Product List Table First -->
+<div class="table-responsive mb-5">
+    <table class="table table-bordered table-striped align-middle">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Sale Price</th>
+                <th>Latest Purchase Price</th>
+                <th>Quantity</th>
+                <th>Category</th>
+                <th>Supplier</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Products.Any())
+            {
+                <tr><td colspan="8" class="text-center text-muted">No products found.</td></tr>
+            }
+            else
+            {
+                foreach (var p in Model.Products)
+                {
+                    <tr>
+                        <td>@p.Id</td>
+                        <td>@p.Name</td>
+                        <td>@p.SalePrice.ToString("C")</td>
+                        <td>@(p.LatestPurchasePrice.HasValue ? p.LatestPurchasePrice.Value.ToString("C") : "N/A")</td>
+                        <td>@p.Quantity</td>
+                        <td>@p.CategoryName</td>
+                        <td>@p.SupplierName</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <a asp-action="Edit" asp-route-id="@p.Id" class="btn btn-sm btn-warning">Edit</a>
+                                <form asp-action="Delete" asp-route-id="@p.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this?');">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
 
+<!-- 📊 Summary Cards in One Row -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-success text-white shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Today's Sales</h5>
+                    <p class="fs-4">@Model.TotalSalesToday.ToString("C")</p>
+                </div>
+            </div>
+        </div>
+    <div class="col-md-4">
+        <div class="card bg-info text-white shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Total Revenue</h5>
+                <p class="fs-4">@Model.TotalRevenue.ToString("C")</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-primary text-white shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Total Profit</h5>
+                <p class="fs-4">@Model.TotalProfit.ToString("C")</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 🏆 Top Customers List -->
+<h4 class="mb-3">🏆 Top Customers</h4>
+<ul class="list-group mb-5">
+    @foreach (var customer in Model.TopCustomers)
+    {
+        <li class="list-group-item d-flex justify-content-between">
+            <span>@customer.CustomerName</span>
+            <span class="text-success fw-bold">@customer.TotalSpent.ToString("C")</span>
+        </li>
+    }
+</ul>
+
+<!-- 🔥 Top Selling Products List -->
+<h4 class="mb-3">🔥 Top Selling Products</h4>
+<ul class="list-group mb-5">
+    @foreach (var product in Model.TopProducts)
+    {
+        <li class="list-group-item d-flex justify-content-between">
+            <span>@product.ProductName</span>
+            <span class="text-primary fw-bold">@product.QuantitySold</span>
+        </li>
+    }
+</ul>
+
+<h4 class="mt-5">⚠️ Low Stock Products</h4>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Sale Price</th>
-            <th>Latest Purchase Price</th>
-            <th>Quantity</th>
-            <th>Category</th>
-            <th>Supplier</th>
+            <th>Product</th>
+            <th>Quantity Left</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var p in Model)
+        @foreach (var low in Model.LowStockProducts)
         {
             <tr>
-                <td>@p.Id</td>
-                <td>@p.Name</td>
-                <td>@p.SalePrice.ToString("C")</td>
-                <td>@(p.LatestPurchasePrice.HasValue ? p.LatestPurchasePrice.Value.ToString("C") : "N/A")</td>
-                <td>@p.Quantity</td>
-                <td>@p.CategoryName</td>
-                <td>@p.SupplierName</td>
+                <td>@low.Name</td>
+                <td class="text-danger fw-bold">@low.Quantity</td>
             </tr>
         }
     </tbody>

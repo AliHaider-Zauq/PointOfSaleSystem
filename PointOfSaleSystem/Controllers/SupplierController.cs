@@ -6,7 +6,7 @@ using PointOfSaleSystem.ViewModels;
 
 namespace PointOfSaleSystem.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class SupplierController : Controller
     {
         private readonly ISupplierService _service;
@@ -22,8 +22,10 @@ namespace PointOfSaleSystem.Controllers
             return View(suppliers);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Create() => View();
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(SupplierViewModel vm)
         {
@@ -39,6 +41,7 @@ namespace PointOfSaleSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var supplier = await _service.GetByIdAsync(id);
@@ -54,6 +57,7 @@ namespace PointOfSaleSystem.Controllers
             return View(vm);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(SupplierViewModel vm)
         {
@@ -70,6 +74,7 @@ namespace PointOfSaleSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeleteAsync(id);

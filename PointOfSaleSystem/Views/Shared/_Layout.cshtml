@@ -64,17 +64,13 @@
                 <a asp-controller="Dashboard" asp-action="Index"><i class="fas fa-home"></i> Dashboard</a>
             }
             <a asp-controller="Product" asp-action="Index"><i class="fas fa-box"></i> Products</a>
-            @if (User.IsInRole("Admin"))
-            {
-                <a asp-controller="Category" asp-action="Index"><i class="fas fa-tags"></i> Categories</a>
-                <a asp-controller="Supplier" asp-action="Index"><i class="fas fa-truck"></i> Suppliers</a>
-            }
+            <a asp-controller="Category" asp-action="Index"><i class="fas fa-tags"></i> Categories</a>
+            <a asp-controller="Supplier" asp-action="Index"><i class="fas fa-truck"></i> Suppliers</a>
             <a asp-controller="Customer" asp-action="Index"><i class="fas fa-users"></i> Customers</a>
             <a asp-controller="Order" asp-action="Index"><i class="fas fa-shopping-cart"></i> Orders</a>
             @if (User.IsInRole("Admin"))
             {
                 <a asp-controller="PurchaseOrder" asp-action="Index"><i class="fas fa-user-shield"></i>Purchase Order</a>
-                <a asp-controller="Reports" asp-action="Index"><i class="fas fa-chart-line"></i> Reports</a>
                 <a asp-controller="Role" asp-action="Index"><i class="fas fa-user-shield"></i> Manage Roles</a>
                
             }

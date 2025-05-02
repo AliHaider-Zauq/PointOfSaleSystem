@@ -3,7 +3,9 @@ using PointOfSaleSystem.Services.Interfaces;
 using PointOfSaleSystem.ViewModels;
 using PointOfSaleSystem.Services;
 using PointOfSaleSystem.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
+[Authorize]
 public class ReturnOrderController : Controller
 {
     private readonly IReturnOrderService _returnOrderService;
