@@ -5,9 +5,37 @@
 
 <h2 class="mb-4">📦 Product Dashboard</h2>
 
+<!-- 📊 Summary Cards in One Row -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-success text-white shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Today's Sales</h5>
+                <p class="fs-4">@Model.TotalSalesToday.ToString("C", new CultureInfo("ur-PK"))</p>
+                </div>
+            </div>
+        </div>
+    <div class="col-md-4">
+        <div class="card bg-info text-white shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Total Revenue</h5>
+                <p class="fs-4">@Model.TotalRevenue.ToString("C", new CultureInfo("ur-PK"))</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-primary text-white shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Total Profit</h5>
+                <p class="fs-4">@Model.TotalProfit.ToString("C", new CultureInfo("ur-PK"))</p>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="mb-3">
     <a asp-controller="Dashboard" asp-action="Create" class="btn btn-primary">+ Create New Product</a>
 </div>
+
 <!-- ✅ Product List Table First -->
 <div class="table-responsive mb-5">
     <table class="table table-bordered table-striped align-middle">
@@ -35,8 +63,8 @@
                     <tr>
                         <td>@p.Id</td>
                         <td>@p.Name</td>
-                        <td>@p.SalePrice.ToString("C")</td>
-                        <td>@(p.LatestPurchasePrice.HasValue ? p.LatestPurchasePrice.Value.ToString("C") : "N/A")</td>
+                        <td>@p.SalePrice.ToString("C", new CultureInfo("ur-PK"))</td>
+                        <td>@(p.LatestPurchasePrice.HasValue ? p.LatestPurchasePrice.Value.ToString("C", new CultureInfo("ur-PK")) : "N/A")</td>
                         <td>@p.Quantity</td>
                         <td>@p.CategoryName</td>
                         <td>@p.SupplierName</td>
@@ -55,33 +83,6 @@
     </table>
 </div>
 
-<!-- 📊 Summary Cards in One Row -->
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="card bg-success text-white shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Today's Sales</h5>
-                    <p class="fs-4">@Model.TotalSalesToday.ToString("C")</p>
-                </div>
-            </div>
-        </div>
-    <div class="col-md-4">
-        <div class="card bg-info text-white shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">Total Revenue</h5>
-                <p class="fs-4">@Model.TotalRevenue.ToString("C")</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card bg-primary text-white shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">Total Profit</h5>
-                <p class="fs-4">@Model.TotalProfit.ToString("C")</p>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- 🏆 Top Customers List -->
 <h4 class="mb-3">🏆 Top Customers</h4>
@@ -90,7 +91,7 @@
     {
         <li class="list-group-item d-flex justify-content-between">
             <span>@customer.CustomerName</span>
-            <span class="text-success fw-bold">@customer.TotalSpent.ToString("C")</span>
+            <span class="text-success fw-bold">@customer.TotalSpent.ToString("C", new CultureInfo("ur-PK"))</span>
         </li>
     }
 </ul>
