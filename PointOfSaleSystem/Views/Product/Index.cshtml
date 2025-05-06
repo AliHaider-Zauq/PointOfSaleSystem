@@ -21,7 +21,7 @@
             <tr>
                 <td>@p.Id</td>
                 <td>@p.Name</td>
-                <td>@p.SalePrice.ToString("C")</td>
+                <td>@p.SalePrice.ToString("C", new CultureInfo("ur-PK"))</td>
                 <td>@p.Quantity</td>
                 <td>@p.CategoryName</td>
             </tr>
