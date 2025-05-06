@@ -25,7 +25,6 @@
                 <th>Sold Quantity</th>
                 <th>Return Quantity</th>
                 <th>Sale Price</th>
-                <th>Purchase Price</th>
             </tr>
         </thead>
         <tbody>
@@ -43,8 +42,7 @@
                         <input type="hidden" asp-for="ReturnItems[@i].SalePrice" />
                         <input type="hidden" asp-for="ReturnItems[@i].PurchasePrice" />
                     </td>
-                    <td>@Model.ReturnItems[i].SalePrice.ToString("C")</td>
-                    <td>@Model.ReturnItems[i].PurchasePrice.ToString("C")</td>
+                    <td>@Model.ReturnItems[i].SalePrice.ToString("C", new CultureInfo("ur-PK"))</td>
                 </tr>
             }
         </tbody>
