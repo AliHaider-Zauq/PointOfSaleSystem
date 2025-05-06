@@ -52,8 +52,7 @@ builder.Services.AddScoped<IReportService, ReportService>();
 
 
 
-// Add MVC
-builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews();
 
 
 var app = builder.Build();

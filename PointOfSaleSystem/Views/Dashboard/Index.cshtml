@@ -3,7 +3,37 @@
     ViewData["Title"] = "📦 Product Dashboard";
 }
 
-<h2 class="mb-4">📦 Product Dashboard</h2>
+<h2 class="mb-4">📦 Admin Dashboard</h2>
+
+
+<!-- 📊 Summary Cards in One Row -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-success text-white shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Today's Sales</h5>
+                <p class="fs-4">@Model.TotalSalesToday.ToString("C")</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-info text-white shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Total Revenue</h5>
+                <p class="fs-4">@Model.TotalRevenue.ToString("C")</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-primary text-white shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Total Profit</h5>
+                <p class="fs-4">@Model.TotalProfit.ToString("C")</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="mb-3">
     <a asp-controller="Dashboard" asp-action="Create" class="btn btn-primary">+ Create New Product</a>
@@ -53,34 +83,6 @@
             }
         </tbody>
     </table>
-</div>
-
-<!-- 📊 Summary Cards in One Row -->
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="card bg-success text-white shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Today's Sales</h5>
-                    <p class="fs-4">@Model.TotalSalesToday.ToString("C")</p>
-                </div>
-            </div>
-        </div>
-    <div class="col-md-4">
-        <div class="card bg-info text-white shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">Total Revenue</h5>
-                <p class="fs-4">@Model.TotalRevenue.ToString("C")</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card bg-primary text-white shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">Total Profit</h5>
-                <p class="fs-4">@Model.TotalProfit.ToString("C")</p>
-            </div>
-        </div>
-    </div>
 </div>
 
 <!-- 🏆 Top Customers List -->
